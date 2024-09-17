@@ -1,0 +1,38 @@
+Vue.config.devtools = true;
+
+Vue.component("dialogue", {
+  template: "#dialogue"
+});
+
+Vue.component("dialogue-text", {
+  template: "#dialogue-text",
+  data() {
+    return {
+      text: "",
+      displayedText: ""
+    };
+  },
+  created() {
+    this.text = this.$slots.default[0].text;
+  },
+  mounted() {
+    const speed = 25;
+    const delay = 5500;
+    let i = 0;
+
+    const typewriter = () => {
+      if (i < this.text.length) {
+        this.displayedText += this.text.charAt(i);
+        i++;
+        setTimeout(typewriter, speed);
+      }
+    };
+
+    setTimeout(typewriter, delay);
+  }
+});
+
+const app = new Vue({
+  el: "#app"
+});
+
